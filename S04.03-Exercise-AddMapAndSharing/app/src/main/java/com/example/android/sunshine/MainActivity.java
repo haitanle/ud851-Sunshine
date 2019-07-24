@@ -220,9 +220,27 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
             loadWeatherData();
             return true;
         }
-
-        // TODO (2) Launch the map when the map menu item is clicked
+        // done (2) Launch the map when the map menu item is clicked
+        else if (id == R.id.action_open_map){
+            String location = SunshinePreferences.getPreferredWeatherLocation(this);
+            openMap(location);
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openMap(String location){
+        Uri geoLocation = new Uri.Builder()
+                .scheme("geo")
+                .path("0,0")
+                .appendQueryParameter("q", location)
+                .build();
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(geoLocation);
+
+        if (intent.resolveActivity(getPackageManager()) != null){
+            startActivity(intent);
+        }
     }
 }
