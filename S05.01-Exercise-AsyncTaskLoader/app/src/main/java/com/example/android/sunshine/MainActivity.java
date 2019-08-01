@@ -163,28 +163,11 @@ public class MainActivity extends AppCompatActivity
             @Nullable
             @Override
             public String[] loadInBackground() {
-//                String location = bundle.getString(BUNDLE_EXTRA_KEY);
-//                URL weatherRequestUrl = NetworkUtils.buildUrl(location);
-//
-//                Log.d(MainActivity.class.getSimpleName(), "URL----"+weatherRequestUrl.toString());
-//                try {
-//                    String jsonWeatherResponse = NetworkUtils
-//                            .getResponseFromHttpUrl(weatherRequestUrl);
-//
-//                    String[] simpleJsonWeatherData = OpenWeatherJsonUtils
-//                            .getSimpleWeatherStringsFromJson(MainActivity.this, jsonWeatherResponse);
-//
-//                    return simpleJsonWeatherData;
-//
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                    return null;
-//                }
 
-                String locationQuery = SunshinePreferences
+                String location = SunshinePreferences
                         .getPreferredWeatherLocation(MainActivity.this);
 
-                URL weatherRequestUrl = NetworkUtils.buildUrl(locationQuery);
+                URL weatherRequestUrl = NetworkUtils.buildUrl(location);
 
                 try {
                     String jsonWeatherResponse = NetworkUtils
@@ -194,15 +177,35 @@ public class MainActivity extends AppCompatActivity
                             .getSimpleWeatherStringsFromJson(MainActivity.this, jsonWeatherResponse);
 
                     return simpleJsonWeatherData;
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     return null;
                 }
+
+//                String locationQuery = SunshinePreferences
+//                        .getPreferredWeatherLocation(MainActivity.this);
+//
+//                URL weatherRequestUrl = NetworkUtils.buildUrl(locationQuery);
+//
+//                try {
+//                    String jsonWeatherResponse = NetworkUtils
+//                            .getResponseFromHttpUrl(weatherRequestUrl);
+//
+//                    String[] simpleJsonWeatherData = OpenWeatherJsonUtils
+//                            .getSimpleWeatherStringsFromJson(MainActivity.this, jsonWeatherResponse);
+//
+//                    return simpleJsonWeatherData;
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    return null;
+//                }
             }
 
             @Override
             public void deliverResult(@Nullable String[] data) {
                 mWeatherReport = data;
+                mLoadingIndicator.setVisibility(View.INVISIBLE);
                 super.deliverResult(data);
             }
         };
