@@ -64,6 +64,9 @@
     <!-- Key name for temperature unit preference in SharedPreferences [CHAR LIMIT=NONE] -->
     <string name="pref_units_key" translatable="false">units</string>
 
+    <!-- default value to metric if not metric set -->
+    <string name="pref_units_default" translatable="false">metric</string>
+
     <!-- Value in SharedPreferences for metric temperature unit option [CHAR LIMIT=NONE] -->
     <string name="pref_units_metric" translatable="false">metric</string>
 
