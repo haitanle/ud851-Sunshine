@@ -15,20 +15,60 @@
  */
 package com.example.android.sunshine.sync;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+
+import com.example.android.sunshine.data.WeatherContract;
+
+import java.net.URI;
+import java.net.URL;
 
 
 public class SunshineSyncUtils {
 
-//  TODO (1) Declare a private static boolean field called sInitialized
+//  done (1) Declare a private static boolean field called sInitialized
+    private static boolean sInitialized = false;
+    private static AsyncTask mBackgroundTask;
 
-    //  TODO (2) Create a synchronized public static void method called initialize
-    //  TODO (3) Only execute this method body if sInitialized is false
-    //  TODO (4) If the method body is executed, set sInitialized to true
-    //  TODO (5) Check to see if our weather ContentProvider is empty
-        //  TODO (6) If it is empty or we have a null Cursor, sync the weather now!
+    //  done (2) Create a synchronized public static void method called initialize
+    //  done (3) Only execute this method body if sInitialized is false
+    //  done (4) If the method body is executed, set sInitialized to true
+    //  done (5) Check to see if our weather ContentProvider is empty
+        //  done (6) If it is empty or we have a null Cursor, sync the weather now!
+
+    /**
+     * Perform the sync once on app startup, if it is already done then don't perform again
+     * We perform the sync if the cursor is empty or null.
+     * @param context
+     */
+    synchronized public static void initialize(final Context context){
+        if (sInitialized) return;
+
+            mBackgroundTask = new AsyncTask() {
+                @Override
+                protected Object doInBackground(Object[] objects) {
+                    ContentResolver resolver = context.getContentResolver();
+                    Cursor cursor = resolver.query(
+                                        WeatherContract.WeatherEntry.CONTENT_URI,
+                                        null,
+                                        null,
+                                        null,
+                                        null);
+
+                    if (cursor == null || cursor.equals("") || cursor.getCount()==0){
+                        startImmediateSync(context);
+                    }
+                    cursor.close();
+                    return null;
+                }
+            };
+        mBackgroundTask.execute();
+        sInitialized = true;
+    }
 
     /**
      * Helper method to perform a sync immediately using an IntentService for asynchronous
