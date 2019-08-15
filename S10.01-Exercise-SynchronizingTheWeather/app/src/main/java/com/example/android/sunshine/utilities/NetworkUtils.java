@@ -54,7 +54,7 @@ public final class NetworkUtils {
     private static final String STATIC_WEATHER_URL =
             "https://andfun-weather.udacity.com/staticweather";
 
-    private static final String FORECAST_BASE_URL = STATIC_WEATHER_URL;
+    private static final String FORECAST_BASE_URL = DYNAMIC_WEATHER_URL;
 
     /*
      * NOTE: These values only effect responses from OpenWeatherMap, NOT from the fake weather
@@ -163,6 +163,7 @@ public final class NetworkUtils {
 
     /**
      * This method returns the entire result from the HTTP response.
+     * Fetches the data given the URL
      *
      * @param url The URL to fetch the HTTP response from.
      * @return The contents of the HTTP response, null if no response
