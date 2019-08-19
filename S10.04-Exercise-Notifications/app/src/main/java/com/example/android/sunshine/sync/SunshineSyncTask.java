@@ -18,9 +18,13 @@ package com.example.android.sunshine.sync;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
+import com.example.android.sunshine.R;
 import com.example.android.sunshine.data.WeatherContract;
 import com.example.android.sunshine.utilities.NetworkUtils;
+import com.example.android.sunshine.utilities.NotificationUtils;
 import com.example.android.sunshine.utilities.OpenWeatherJsonUtils;
 
 import java.net.URL;
@@ -73,11 +77,19 @@ public class SunshineSyncTask {
                         WeatherContract.WeatherEntry.CONTENT_URI,
                         weatherValues);
 
-//              TODO (13) Check if notifications are enabled
+//              done (13) Check if notifications are enabled
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+                boolean notificationOn = sharedPreferences.getBoolean(context.getString(R.string.pref_enable_notifications_key),
+                        context.getResources().getBoolean(R.bool.pref_notification_default));
 
-//              TODO (14) Check if a day has passed since the last notification
-
-//              TODO (15) If more than a day have passed and notifications are enabled, notify the user
+                if (notificationOn) {
+//                  done (14) Check if a day has passed since the last notification
+                    long notificationTime = sharedPreferences.getLong(context.getString(R.string.last_notification_key), 0);
+                    if(moreThan24hours(notificationTime)){
+                        // done (15) If more than a day have passed and notifications are enabled, notify the user
+                        NotificationUtils.notifyUserOfNewWeather(context);
+                    }
+                }
 
             /* If the code reaches this point, we have successfully performed our sync */
 
@@ -87,5 +99,24 @@ public class SunshineSyncTask {
             /* Server probably invalid */
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Determine the hours between last notificaiton and recent notification
+     * @param lastNotification
+     * @return
+     */
+    private static boolean moreThan24hours(long lastNotification){
+
+        long currentTime = System.currentTimeMillis();
+        long diff = currentTime - lastNotification;
+
+        long diffHours = diff/(60*60*1000)%24;
+
+        if (diffHours >=24 ){
+            return true;
+        }
+        //return false;   //set to False in production
+        return true;
     }
 }
