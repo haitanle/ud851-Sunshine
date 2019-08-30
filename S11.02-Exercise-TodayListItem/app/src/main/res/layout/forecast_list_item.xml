@@ -26,6 +26,9 @@
     android:paddingRight="16dp"
     android:paddingTop="12dp">
 
+    <!--<include-->
+        <!--layout="@layout/list_item_forecast_today"/>-->
+
     <ImageView
         android:id="@+id/weather_icon"
         android:layout_width="40dp"

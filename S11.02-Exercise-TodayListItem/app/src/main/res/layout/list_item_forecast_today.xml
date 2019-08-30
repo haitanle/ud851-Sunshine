@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="32dp"
+    xmlns:tool="http://schemas.android.com/apk/res-auto">
+
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:textSize="@dimen/today_font_size"
+        tool:layout_constraintEnd_toEndOf="parent"
+        tool:layout_constraintHorizontal_bias="0.498"
+        android:gravity="center_horizontal"
+        tool:layout_constraintStart_toStartOf="parent"
+        tool:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/weather_icon"
+        android:layout_width="85dp"
+        android:layout_height="73dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="48dp"
+        tool:layout_constraintStart_toStartOf="parent"
+        tool:layout_constraintTop_toBottomOf="@+id/date"
+        tool:srcCompat="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/weather_description"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="36dp"
+        android:textSize="@dimen/today_font_size"
+        android:text="TextView"
+        tool:layout_constraintStart_toStartOf="parent"
+        tool:layout_constraintTop_toBottomOf="@+id/weather_icon" />
+
+    <TextView
+        android:id="@+id/high_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="51dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
+        android:text="TextView"
+        android:textSize="48dp"
+        tool:layout_constraintEnd_toEndOf="parent"
+        tool:layout_constraintTop_toBottomOf="@+id/date" />
+
+    <TextView
+        android:id="@+id/low_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
+        tool:layout_constraintBaseline_toBaselineOf="@id/weather_description"
+        android:text="TextView"
+        android:textSize="28dp"
+        tool:layout_constraintEnd_toEndOf="parent"
+        tool:layout_constraintTop_toBottomOf="@+id/high_temperature" />
+
+
+</android.support.constraint.ConstraintLayout>
